@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+<!-- header -->
+{% block header %}
+<title>Muqawishop-{{product.title}}</title>
+
+{% endblock %}
+
+<!-- main content -->
+{% block content %}
+<h1 class="my-3 product">{{product.title}}</h1>
+<hr />
+<div class="d-flex justify-content-between p-4 product_wrapper rounded">
+    <div class="w-50 d-flex flex-shrink-0 justify-content-center align-items-center">
+        <img src="{{product.thumbnail}}" alt="{{product.title}}" />
+    </div>
+    <div>
+        <strong class="fs-5 mb-3">Product name: &nbsp;&nbsp;</strong>
+        <h3 class="text-warning-emphasis">{{product.title}}</h3>
+        <strong class="fs-5">Description: &nbsp;&nbsp;</strong>
+        <p class="fs-5">{{product.description}}</p>
+        <strong class="fs-5">Rate: &nbsp;&nbsp;</strong>
+        <div class="mb-3">
+            {% with product.rating|floatformat:0 as stars %} {% if stars == "5" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            {% elif stars == "4" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "3" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "2" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "1" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% else %}
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% endif %} {% endwith %}
+
+            <span class="mx-1 text-primary-emphasis fw-bold">{{product.rating}}</span>
+        </div>
+        <strong class="fs-5">price: &nbsp;&nbsp;</strong>
+        <p class="fs-5 text-success-emphasis">{{product.price}}</p>
+        <div class="text-end">
+            <a class="btn btn-outline-dark" href="{% url 'edit_product' product_id=product.id %}">Edit</a>
+            {% if user.id and user.is_superuser %}
+            <a class="btn btn-outline-danger" href="{% url 'delete_product' product_id=product.id %}">Delete</a>
+            {% endif %}
+            <a class="btn btn-outline-success" href="{% url 'cart_add' product_id=product.id %}">Add To Cart</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+<!-- static files -->
+{% load static %}
+
+<!-- header -->
+{% block header %}
+<title>Muqawishop - Cart</title>
+{% endblock %}
+
+<!-- main content -->
+{% block content %}
+<div class="container">
+    <h2 class="our_products d-inline-block">Cart</h2>
+    <hr class="mb-4" />
+
+    {% if cart_items %} {% for item in cart_items %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 p-3">
+                <img src="{{ item.product.thumbnail }}" class="img-fluid rounded-start" alt="{{ item.product.title }}" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title">{{ item.product.title }}</h4>
+                    <p class="card-text fs-5">{{ item.product.description }}</p>
+                    <p class="card-text"><strong>Price:</strong> ${{ item.product.price }}</p>
+                    <p class="card-text"><strong>Quantity:</strong> <span>{{ item.quantity }}</span></p>
+
+                    <!-- Update & Delete Buttons -->
+                    <a href="{% url 'update_item' item.id %}" class="btn btn-primary btn-sm">Update</a>
+                    <form method="post" style="display: inline">
+                        {% csrf_token %}
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Remove</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %} {% else %}
+    <p class="text-center fs-3 fw-bold m-0" style="color: #cb9800">Your cart is empty.</p>
+    <div class="text-center">
+        <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart" class="w-50" />
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

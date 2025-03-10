@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %}
+<!-- header -->
+{% block header %}
+<title>Muqawishop-{{title}}</title>
+
+{% endblock %}
+
+<!-- main content -->
+{% block content %}
+<h2 class="mb-3">Are you sure you want to delete "{{ product.title }}"?</h2>
+<div class="card product-card delete">
+    <img src="{{product.thumbnail}}" class="card-img-top delete" alt="{{prodcut.title|title}}" />
+    <div class="card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <div>
+            {% with product.rating|floatformat:0 as stars %} {% if stars == "5" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            {% elif stars == "4" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "3" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "2" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% elif stars == "1" %}
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% else %}
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            <i class="fa-regular fa-star" style="color: #ccc"></i>
+            {% endif %} {% endwith %}
+
+            <span class="mx-1 text-primary-emphasis fw-bold">{{product.rating}}</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="price">${{product.price}}</span>
+            <form method="post" enctype="multipart/form-data" class="text-end mt-3">
+                {% csrf_token %}
+
+                <button class="btn btn-outline-danger" type="submit">{{submit}}</button>
+                <a class="btn btn-outline-warning" href="{% url back_to %}">back</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
